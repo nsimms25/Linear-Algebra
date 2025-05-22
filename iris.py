@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.datasets import load_iris
+import matplotlib.pyplot as plt
 
 # Load the dataset
 iris = load_iris()
@@ -25,3 +26,16 @@ eig_vals, eig_vecs = np.linalg.eig(cov_matrix)
 
 print("Eigenvalues:", eig_vals)
 print("1st eigenvector:", eig_vecs[:, 0])
+#Eigenvectors: directions of maximum variance (principal components)
+#Eigenvalues: magnitude of variance along those directions
+
+top_2_eigvecs = eig_vecs[:, :2]
+projected_data = np.dot(data_norm, top_2_eigvecs)
+
+# Visualize the 2D projection
+plt.scatter(projected_data[:, 0], projected_data[:, 1], c=iris.target, cmap='viridis')
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.title('PCA Projection of Iris Dataset')
+plt.colorbar()
+plt.show()
